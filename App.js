@@ -1,14 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { Ionicons } from '@expo/vector-icons';
+import { GlobalStyles } from './constants/styles';
 
 import ManageExp from './screens/ManageExp';
 import AllExp from './screens/AllExp';
 import RecentExp from './screens/RecentExp';
-import { GlobalStyles } from './constants/styles';
+import IconBtn from './components/UI/IconBtn';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -16,13 +17,20 @@ const Tabs = createBottomTabNavigator();
 function ExpOverview() {
   return (
     <Tabs.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerStyle: { backgroundColor: GlobalStyles.colors.primary },
         headerTintColor: 'white',
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary },
         tabBarActiveTintColor: GlobalStyles.colors.darkestaccent,
-        tabBarInactiveTintColor: GlobalStyles.colors.darkest
-      }}>
+        tabBarInactiveTintColor: GlobalStyles.colors.darkest,
+        headerRight: () =>
+          <IconBtn
+            icon='add'
+            size={31}
+            color={GlobalStyles.colors.darkest}
+            onPress={() => { navigation.navigate('ManageExp'); }}
+          />
+      })}>
       <Tabs.Screen
         name='RecentExpenses'
         component={RecentExp}
@@ -58,18 +66,13 @@ export default function App() {
       <StatusBar style="auto" />
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name='ExpensesOverview'
+          <Stack.Screen name='ExpOverview'
             component={ExpOverview}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name='ManageExpenses' component={ManageExp} />
+          <Stack.Screen name='ManageExp' component={ManageExp} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-  },
-});
