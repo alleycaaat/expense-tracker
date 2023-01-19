@@ -5,9 +5,13 @@ import { getFormatDate } from '../util/date';
 
 function ExpItem({ item }) {
     const nav = useNavigation();
+
     function pressHandler() {
-        nav.navigate('ManageExp');
+        nav.navigate('ManageExp', {
+            expId: item.id
+        });
     }
+
     return (
         <Pressable
             onPress={pressHandler}
