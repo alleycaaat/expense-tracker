@@ -14,13 +14,13 @@ const EXPNS = [
     {
         id: 'e2',
         desc: 'Injinji socks',
-        amt: 12.00,
+        amt: 12.75,
         date: new Date('2022-12-15'),
     },
     {
         id: 'e3',
         desc: 'Tailwind',
-        amt: 30.00,
+        amt: 30.80,
         date: new Date('2022-10-04'),
     },
     {
@@ -44,12 +44,11 @@ export default ExpOutput;
 
 const styles = StyleSheet.create({
     container: {
-        //flexDirection: 'row',
-        //justifyContent: 'space-between',
-        //alignItems: 'center',
         flex: 1,
         color: 'white',
-        padding: 24,
+        paddingHorizontal: 24,
+        paddingTop: 24,
+        paddingBottom: 0,
         backgroundColor: GlobalStyles.colors.darkest,
     },
 });

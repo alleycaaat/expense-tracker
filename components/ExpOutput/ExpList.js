@@ -1,8 +1,9 @@
-import { FlatList, Text } from 'react-native';
+import { FlatList } from 'react-native';
+import ExpItem from '../ExpItem';
 
 function rednerExpItem(itemData) {
     return (
-        <Text>{itemData.item.desc}</Text>
+        <ExpItem {...itemData} />
     );
 }
 function ExpList({ expenses }) {

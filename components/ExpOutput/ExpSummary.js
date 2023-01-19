@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 8,
         elevation: 6,
+        borderRadius: 6,
         backgroundColor: GlobalStyles.colors.lightest,
     },
     date: {
