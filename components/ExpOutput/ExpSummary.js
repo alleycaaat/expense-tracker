@@ -1,10 +1,10 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 
-function ExpSummary({ daterange, expenses }) {
-    const expSum = expenses.reduce((sum, expense) => {
+function ExpSummary({ daterange, exp }) {
+    const expSum = exp.reduce((sum, exp) => {
         return (
-            sum + expense.amt
+            sum + exp.amt
         );
     }, 0);
     return (

@@ -6,10 +6,10 @@ function rednerExpItem(itemData) {
         <ExpItem {...itemData} />
     );
 }
-function ExpList({ expenses }) {
+function ExpList({ exp }) {
     return (
         <FlatList
-            data={expenses}
+            data={exp}
             renderItem={rednerExpItem}
             keyExtractor={(item) => item.id}
         />

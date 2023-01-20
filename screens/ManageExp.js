@@ -1,20 +1,24 @@
 import { useLayoutEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Btn from '../components/UI/Btn';
-import IconBtn from '../components/UI/IconBtn';
+import { StyleSheet, View } from 'react-native';
+
 import { GlobalStyles } from '../constants/styles';
 
+import Btn from '../components/UI/Btn';
+import IconBtn from '../components/UI/IconBtn';
+
 function ManageExp({ route, navigation }) {
+    //params is a ternary to avoid throwing an error if there's no id
     const editedId = route.params?.expId;
     const isEditing = !!editedId;
-    function deleteHandler() {
 
+    function deleteHandler() {
+        navigation.goBack();
     }
     function cancelHandler() {
-
+        navigation.goBack();
     }
     function confirmHandler() {
-
+        navigation.goBack();
     }
 
     useLayoutEffect(() => {

@@ -1,9 +1,15 @@
+import { useContext } from 'react';
 import { StyleSheet, Text } from 'react-native';
+
+import { ExpContext } from '../store/exp-context';
+
 import ExpOutput from '../components/ExpOutput/ExpOutput';
 
 function AllExp() {
+    const expCtx = useContext(ExpContext)
+
     return (
-        <ExpOutput daterange='Total' />
+        <ExpOutput exp={expCtx.exp} daterange='Total' />
     );
 }
 

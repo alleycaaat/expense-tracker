@@ -10,6 +10,7 @@ import ManageExp from './screens/ManageExp';
 import AllExp from './screens/AllExp';
 import RecentExp from './screens/RecentExp';
 import IconBtn from './components/UI/IconBtn';
+import ExpContextProvider from './store/exp-context';
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -64,26 +65,28 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: GlobalStyles.colors.primary },
-            headerTintColor: 'white',
-          }}>
-          <Stack.Screen
-            name='ExpOverview'
-            component={ExpOverview}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='ManageExp'
-            component={ManageExp}
-            options={{
-              presentation: 'modal',
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <ExpContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: GlobalStyles.colors.primary },
+              headerTintColor: 'white',
+            }}>
+            <Stack.Screen
+              name='ExpOverview'
+              component={ExpOverview}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='ManageExp'
+              component={ManageExp}
+              options={{
+                presentation: 'modal',
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ExpContextProvider>
     </>
   );
 }
