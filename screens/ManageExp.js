@@ -1,11 +1,12 @@
 import { useContext, useLayoutEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 import { GlobalStyles } from '../constants/styles';
 import { ExpContext } from '../store/exp-context';
 
 import Btn from '../components/UI/Btn';
 import IconBtn from '../components/UI/IconBtn';
+import ExpForm from '../components/ManageExp/ExpForm';
 
 function ManageExp({ route, navigation }) {
     const expCtx = useContext(ExpContext);
@@ -18,7 +19,7 @@ function ManageExp({ route, navigation }) {
         expCtx.deleteExp(editedId);
         navigation.goBack();
     }
-    
+
     function cancelHandler() {
         navigation.goBack();
     }
@@ -40,6 +41,7 @@ function ManageExp({ route, navigation }) {
 
     return (
         <View style={styles.container}>
+            <ExpForm />
             <View style={styles.buttonWrapper}>
                 <Btn style={styles.button} mode='flat' onPress={cancelHandler}>Cancel</Btn>
                 <Btn style={styles.button} onPress={confirmHandler}>
