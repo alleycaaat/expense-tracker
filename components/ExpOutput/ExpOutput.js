@@ -1,15 +1,21 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
 import { GlobalStyles } from '../../constants/styles';
 
 import ExpList from './ExpList';
 import ExpSummary from './ExpSummary';
 
-function ExpOutput({ exp, daterange }) {
+function ExpOutput({ exp, daterange, fallback }) {
+    let content = <Text style={styles.fallback}>{fallback}</Text>;
+
+    if (exp.length > 0) {
+        content = <ExpList exp={exp} />;
+    }
+
     return (
         <View style={styles.container}>
             <ExpSummary exp={exp} daterange={daterange} />
-            <ExpList exp={exp} />
+            {content}
         </View>
     );
 }
@@ -24,5 +30,11 @@ const styles = StyleSheet.create({
         paddingTop: 24,
         paddingBottom: 0,
         backgroundColor: GlobalStyles.colors.darkest,
+    },
+    fallback: {
+        color: 'white',
+        fontSize: 16,
+        textAlign: 'center',
+        marginTop: 31,
     },
 });

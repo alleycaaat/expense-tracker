@@ -5,7 +5,7 @@ const EXPNS = [
         id: 'e1',
         desc: 'Trail runners',
         amt: 129.99,
-        date: new Date('2023-01-18'),
+        date: new Date('2023-01-17'),
     },
     {
         id: 'e2',
@@ -17,7 +17,7 @@ const EXPNS = [
         id: 'e3',
         desc: 'Tailwind',
         amt: 30.80,
-        date: new Date('2022-10-04'),
+        date: new Date('2022-10-01'),
     },
     {
         id: 'e4',

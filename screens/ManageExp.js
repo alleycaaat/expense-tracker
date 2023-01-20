@@ -1,23 +1,34 @@
-import { useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { GlobalStyles } from '../constants/styles';
+import { ExpContext } from '../store/exp-context';
 
 import Btn from '../components/UI/Btn';
 import IconBtn from '../components/UI/IconBtn';
 
 function ManageExp({ route, navigation }) {
+    const expCtx = useContext(ExpContext);
+
     //params is a ternary to avoid throwing an error if there's no id
     const editedId = route.params?.expId;
     const isEditing = !!editedId;
 
     function deleteHandler() {
+        expCtx.deleteExp(editedId);
         navigation.goBack();
     }
+    
     function cancelHandler() {
         navigation.goBack();
     }
+
     function confirmHandler() {
+        if (isEditing) {
+            expCtx.updateExp();
+        } else {
+            expCtx.addExp();
+        }
         navigation.goBack();
     }
 
@@ -31,7 +42,9 @@ function ManageExp({ route, navigation }) {
         <View style={styles.container}>
             <View style={styles.buttonWrapper}>
                 <Btn style={styles.button} mode='flat' onPress={cancelHandler}>Cancel</Btn>
-                <Btn style={styles.button} onPress={confirmHandler}>{isEditing ? 'Update' : 'Add'}</Btn>
+                <Btn style={styles.button} onPress={confirmHandler}>
+                    {isEditing ? 'Update' : 'Add'}
+                </Btn>
             </View>
             {isEditing && (
                 <View style={styles.delete}>
