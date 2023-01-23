@@ -1,5 +1,5 @@
 import { FlatList } from 'react-native';
-import ExpItem from '../ExpItem';
+import ExpItem from './ExpItem';
 
 function rednerExpItem(itemData) {
     return (

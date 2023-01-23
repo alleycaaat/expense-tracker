@@ -7,7 +7,6 @@ function Input({ label, style, inputConfig }) {
     if (inputConfig && inputConfig.multiline) {
         inputStyles.push(styles.multiline);
     }
-
     return (
         <View style={[styles.wrapper, style]}>
             <Text style={styles.label}>{label}</Text>

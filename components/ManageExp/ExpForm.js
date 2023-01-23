@@ -1,10 +1,37 @@
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
+import { GlobalStyles } from '../../constants/styles';
+
 import Input from './Input';
+import Btn from '../UI/Btn';
 
-function ExpForm() {
-    function amtChngHandler() {
+function ExpForm({ confirmBtnLabel, cancelHandler, onSubmit }) {
+    //s9m152
+    const [inputValues, setInputValues] = useState({
+        amt: '',
+        date: '',
+        desc: ','
+    });
 
-    }
+    const submitHandler = () => {
+        const expData = {
+            amt: +inputValues.amt,
+            date: new Date(inputValues.date),
+            desc: inputValues.desc,
+        };
+        onSubmit(expData);
+    };
+    console.log('inputvalues:', inputValues);
+    const inputHandler = (inputName, val) => {
+        setInputValues((currValue) => {
+            return {
+                ...currValue,
+                [inputName]: val,
+            };
+        });
+    };
+
     return (
         <View style={styles.wrapper}>
             <Text style={styles.header}>Expense Details</Text>
@@ -13,17 +40,20 @@ function ExpForm() {
                     style={styles.inputRow}
                     label='Amount'
                     inputConfig={{
+                        onChangeText: inputHandler.bind(this, 'amt'),
                         keyboardType: 'decimal-pad',
-                        onChangeText: amtChngHandler,
                         placeholder: '$xx.xx',
-                    }} />
+                        value: inputValues.amt,
+                    }}
+                />
                 <Input
                     style={styles.inputRow}
                     label='Date'
                     inputConfig={{
-                        placeholder: 'DD-MM-YYYY',
+                        onChangeText: inputHandler.bind(this, 'date'),
+                        placeholder: 'YYYY-MM-DD',
                         maxLength: 10,
-                        onChangeText: () => { },
+                        value: inputValues.date,
                     }} />
             </View>
             <Input label='Description'
@@ -32,10 +62,22 @@ function ExpForm() {
                     maxLength: 150,
                     multiline: true,
                     autoCorrect: false,
-                    onChangeText: () => { },
+                    onChangeText: inputHandler.bind(this, 'desc'),
+                    value: inputValues.desc,
                 }} />
+            <View style={styles.buttonWrapper}>
+                <Btn
+                    style={styles.button}
+                    onPress={cancelHandler}
+                    mode='flat'
+                >Cancel</Btn>
+                <Btn
+                    style={styles.button}
+                    onPress={submitHandler}>
+                    {confirmBtnLabel}
+                </Btn>
+            </View>
         </View>
-
     );
 }
 
@@ -58,5 +100,21 @@ const styles = StyleSheet.create({
     },
     inputRow: {
         flex: 1,
+    },
+    buttonWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    button: {
+        minWidth: 120,
+        marginHorizontal: 8,
+    },
+    delete: {
+        marginTop: 16,
+        paddingTop: 8,
+        borderTopWidth: 2,
+        borderTopColor: GlobalStyles.colors.lighter,
+        alignItems: 'center',
     },
 });

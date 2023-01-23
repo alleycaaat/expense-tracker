@@ -8,7 +8,11 @@ function AllExp() {
     const expCtx = useContext(ExpContext);
 
     return (
-        <ExpOutput exp={expCtx.exp} daterange='Total' fallback={'No expenses to display'} />
+        <ExpOutput
+            exp={expCtx.exp}
+            daterange='Total'
+            fallback={'No expenses to display'} 
+            />
     );
 }
 

@@ -14,7 +14,11 @@ function RecentExp() {
         return (exp.date > prevDate) && (exp.date <= today);
     });
     return (
-        <ExpOutput exp={recentExp} daterange='Last 7 days' fallback={'No expenses in the last 7 days'} />
+        <ExpOutput
+            exp={recentExp}
+            daterange='Last 7 days'
+            fallback={'No expenses in the last 7 days'}
+        />
     );
 }
 

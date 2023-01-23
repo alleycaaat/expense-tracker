@@ -24,11 +24,12 @@ function ManageExp({ route, navigation }) {
         navigation.goBack();
     }
 
-    function confirmHandler() {
+    function confirmHandler(expData) {
+        console.log('expData:',expData)
         if (isEditing) {
-            expCtx.updateExp();
+            expCtx.updateExp(editedId, expData);
         } else {
-            expCtx.addExp();
+            expCtx.addExp(expData);
         }
         navigation.goBack();
     }
@@ -41,13 +42,12 @@ function ManageExp({ route, navigation }) {
 
     return (
         <View style={styles.container}>
-            <ExpForm />
-            <View style={styles.buttonWrapper}>
-                <Btn style={styles.button} mode='flat' onPress={cancelHandler}>Cancel</Btn>
-                <Btn style={styles.button} onPress={confirmHandler}>
-                    {isEditing ? 'Update' : 'Add'}
-                </Btn>
-            </View>
+            <ExpForm
+                cancelHandler={cancelHandler}
+                onSubmit={confirmHandler}
+                confirmBtnLabel={isEditing ? 'Update' : 'Add'}
+            />
+
             {isEditing && (
                 <View style={styles.delete}>
                     <IconBtn
@@ -69,20 +69,4 @@ const styles = StyleSheet.create({
         padding: 24,
         backgroundColor: GlobalStyles.colors.darkest,
     },
-    buttonWrapper: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    button: {
-        minWidth: 120,
-        marginHorizontal: 8,
-    },
-    delete: {
-        marginTop: 16,
-        paddingTop: 8,
-        borderTopWidth: 2,
-        borderTopColor: GlobalStyles.colors.lighter,
-        alignItems: 'center',
-    }
 });
