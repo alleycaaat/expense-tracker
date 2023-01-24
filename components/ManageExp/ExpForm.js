@@ -6,12 +6,13 @@ import { GlobalStyles } from '../../constants/styles';
 import Input from './Input';
 import Btn from '../UI/Btn';
 
-function ExpForm({ confirmBtnLabel, cancelHandler, onSubmit }) {
+function ExpForm({ confirmBtnLabel, cancelHandler, onSubmit, defaultValues }) {
     //s9m152
+
     const [inputValues, setInputValues] = useState({
-        amt: '',
-        date: '',
-        desc: ','
+        amt: defaultValues ? defaultValues.amt.toString() : '',
+        date: defaultValues ? defaultValues.date.toISOString().slice(0, 10) : '',
+        desc: defaultValues ? defaultValues.desc.toString() : '',
     });
 
     const submitHandler = () => {
@@ -22,7 +23,7 @@ function ExpForm({ confirmBtnLabel, cancelHandler, onSubmit }) {
         };
         onSubmit(expData);
     };
-    console.log('inputvalues:', inputValues);
+
     const inputHandler = (inputName, val) => {
         setInputValues((currValue) => {
             return {
@@ -71,9 +72,7 @@ function ExpForm({ confirmBtnLabel, cancelHandler, onSubmit }) {
                     onPress={cancelHandler}
                     mode='flat'
                 >Cancel</Btn>
-                <Btn
-                    style={styles.button}
-                    onPress={submitHandler}>
+                <Btn style={styles.button} onPress={submitHandler}>
                     {confirmBtnLabel}
                 </Btn>
             </View>

@@ -11,8 +11,8 @@ function AllExp() {
         <ExpOutput
             exp={expCtx.exp}
             daterange='Total'
-            fallback={'No expenses to display'} 
-            />
+            fallback={'No expenses to display'}
+        />
     );
 }
 

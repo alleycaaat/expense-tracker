@@ -33,23 +33,24 @@ export const ExpContext = createContext({
     deleteExp: (id) => { },
     updateExp: (id, { desc, amt, date }) => { },
 });
-
+//updated expense information is fine in ManageExp but isn't making it here
 function expReducer(state, action) {
     switch (action.type) {
         case 'ADD':
             const id = new Date().toString() + Math.random().toString();
             return [{ ...action.payload, id: id }, ...state];
         case 'UPDATE':
-            const updateExpId = state.findIndex //get the index of the item to be updated
-                ((exp) => exp.id === action.payload.id
-                );
+            //get the index of the item to be updated
+            const updateExpId = state.findIndex(
+                (exps) => exps.id === action.payload.id
+            );
             const updateExp = state[updateExpId]; //get the data at that index
-            const updatedItem = { ...updateExp, ...action.payload.date }; //merge the  old and new data
+            const updatedItem = { ...updateExp, ...action.payload.data }; //merge the  old and new data
             const updatedExpList = [...state]; //get the array to be updated, spread in new to keep it immutable
             updatedExpList[updateExpId] = updatedItem; //using the newly created array, go to the index of the item being updated, set it to the updated data
             return updatedExpList;
         case 'DELETE':
-            return state.filter((exp) => exp.id !== action.payload);
+            return state.filter((exps) => exps.id !== action.payload);
         default:
             return state;
     }
