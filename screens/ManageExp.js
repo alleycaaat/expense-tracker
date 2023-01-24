@@ -70,4 +70,11 @@ const styles = StyleSheet.create({
         padding: 24,
         backgroundColor: GlobalStyles.colors.darkest,
     },
+    delete: {
+        marginTop: 16,
+        paddingTop: 8,
+        borderTopWidth: 2,
+        borderTopColor: GlobalStyles.colors.lighter,
+        alignItems: 'center',
+    },
 });
