@@ -6,6 +6,7 @@ import { ExpContext } from '../store/exp-context';
 
 import IconBtn from '../components/UI/IconBtn';
 import ExpForm from '../components/ManageExp/ExpForm';
+import { storeExp } from '../util/http';
 
 function ManageExp({ route, navigation }) {
     const expCtx = useContext(ExpContext);
@@ -35,6 +36,7 @@ function ManageExp({ route, navigation }) {
         if (isEditing) {
             expCtx.updateExp(editedId, expData);
         } else {
+            storeExp(expData);
             expCtx.addExp(expData);
         }
         navigation.goBack();

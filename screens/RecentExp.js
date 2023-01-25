@@ -1,18 +1,29 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { ExpContext } from '../store/exp-context';
 import { getDateMinusDays } from '../util/date';
 
 import ExpOutput from '../components/ExpOutput/ExpOutput';
+import { getExp } from '../util/http';
 
 function RecentExp() {
     const expCtx = useContext(ExpContext);
 
+    useEffect(() => {
+        async function getExpenses() {
+            const exp = await getExp();
+            expCtx.setExp(exp)
+        }
+        getExpenses();
+    }, []);
+
     const recentExp = expCtx.exp.filter((exp) => {
         const today = new Date();
         const prevDate = getDateMinusDays(today, 7);
-        return (exp.date > prevDate) && (exp.date <= today);
+
+        return (exp.date >= prevDate) && (exp.date <= today);
     });
+
     return (
         <ExpOutput
             exp={recentExp}

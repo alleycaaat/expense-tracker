@@ -1,35 +1,11 @@
 import { createContext, useReducer } from 'react';
 
-const EXPNS = [
-    {
-        id: 'e1',
-        desc: 'Trail runners',
-        amt: 129.99,
-        date: new Date('2023-01-17'),
-    },
-    {
-        id: 'e2',
-        desc: 'Injinji socks',
-        amt: 12.75,
-        date: new Date('2022-12-15'),
-    },
-    {
-        id: 'e3',
-        desc: 'Tailwind',
-        amt: 30.80,
-        date: new Date('2022-10-01'),
-    },
-    {
-        id: 'e4',
-        desc: 'Race entry',
-        amt: 90.00,
-        date: new Date('2023-01-01'),
-    },
-];
+
 
 export const ExpContext = createContext({
     exp: [],
     addExp: ({ desc, amt, date }) => { },
+    setExp: (exp) => {},
     deleteExp: (id) => { },
     updateExp: (id, { desc, amt, date }) => { },
 });
@@ -39,6 +15,8 @@ function expReducer(state, action) {
         case 'ADD':
             const id = new Date().toString() + Math.random().toString();
             return [{ ...action.payload, id: id }, ...state];
+        case 'SET':
+            return action.payload;
         case 'UPDATE':
             //get the index of the item to be updated
             const updateExpId = state.findIndex(
@@ -57,10 +35,14 @@ function expReducer(state, action) {
 }
 
 function ExpContextProvider({ children }) {
-    const [expState, dispatch] = useReducer(expReducer, EXPNS);
+    const [expState, dispatch] = useReducer(expReducer, []);
 
     function addExp(expData) {
         dispatch({ type: 'ADD', payload: expData });
+    }
+
+    function setExp(exp) {
+        dispatch({type: 'SET', payload: exp})
     }
 
     function deleteExp(id) {
@@ -74,6 +56,7 @@ function ExpContextProvider({ children }) {
     const value = {
         exp: expState,
         addExp: addExp,
+        setExp: setExp,
         deleteExp: deleteExp,
         updateExp: updateExp,
     };
