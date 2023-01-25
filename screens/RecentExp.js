@@ -10,7 +10,7 @@ import ErrorScreen from '../components/UI/ErrorScreen';
 
 function RecentExp() {
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError]=useState()
+    const [error, setError] = useState();
     const expCtx = useContext(ExpContext);
 
     useEffect(() => {
@@ -19,19 +19,15 @@ function RecentExp() {
                 const exp = await getExp();
                 expCtx.setExp(exp);
             } catch (error) {
-                setError('Could not retrieve expenses.')
+                setError('Could not retrieve expenses.');
             }
             setIsLoading(false);
         }
         getExpenses();
     }, []);
 
-    function errorHandler() {
-        setError(null)
-    }
-
     if (error && !isLoading) {
-        return <ErrorScreen message={error} onConfirm={errorHandler} />
+        return <ErrorScreen message={error} />;
     }
 
     if (isLoading) {

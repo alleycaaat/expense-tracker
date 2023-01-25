@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ADDY = .env
+const ADDY = .env;
 
 export async function storeExp(expData) {
     const res = await axios.post(ADDY + 'expenses.json', expData);

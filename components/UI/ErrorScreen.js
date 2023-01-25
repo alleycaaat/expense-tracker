@@ -1,12 +1,11 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { GlobalStyles } from '../../constants/styles';
 
-function ErrorScreen({ message, onConfirm }) {
+function ErrorScreen({ message }) {
     return (
         <View style={styles.wrapper}>
-            <Text style={[styles.text, styles.title]}>Danger, danger!</Text>
+            <Text style={[styles.text, styles.title]}>Well this is embarrassing...</Text>
             <Text style={styles.text}>{message}</Text>
-            <Button onPress={onConfirm}>Okay</Button>
         </View>
     );
 }

@@ -8,9 +8,12 @@ import IconBtn from '../components/UI/IconBtn';
 import ExpForm from '../components/ManageExp/ExpForm';
 import { deleteExp, storeExp, updateExp } from '../util/http';
 import Loading from '../components/UI/Loading';
+import ErrorScreen from '../components/UI/ErrorScreen';
 
 function ManageExp({ route, navigation }) {
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState();
+
     const expCtx = useContext(ExpContext);
 
     //params is a ternary to avoid throwing an error if there's no id
@@ -27,10 +30,14 @@ function ManageExp({ route, navigation }) {
 
     async function deleteHandler() {
         setIsLoading(true);
-        await deleteExp(editedId);
-        expCtx.deleteExp(editedId);
-
-        navigation.goBack();
+        try {
+            await deleteExp(editedId);
+            expCtx.deleteExp(editedId);
+            navigation.goBack();
+        } catch (error) {
+            setIsLoading(false);
+            setError('Failed to delete expense, please try again later.');
+        }
     }
 
     function cancelHandler() {
@@ -39,14 +46,23 @@ function ManageExp({ route, navigation }) {
 
     async function confirmHandler(expData) {
         setIsLoading(true);
-        if (isEditing) {
-            expCtx.updateExp(editedId, expData);
-            await updateExp(editedId, expData);
-        } else {
-            const id = await storeExp(expData);
-            expCtx.addExp({ ...expData, id: id });
+        try {
+            if (isEditing) {
+                expCtx.updateExp(editedId, expData);
+                await updateExp(editedId, expData);
+            } else {
+                const id = await storeExp(expData);
+                expCtx.addExp({ ...expData, id: id });
+            }
+            navigation.goBack();
+        } catch (error) {
+            setIsLoading(false);
+            setError('Failed to save expense, please try again.');
         }
-        navigation.goBack();
+    }
+
+    if (error && !isLoading) {
+        return <ErrorScreen message={error} />;
     }
 
     if (isLoading) {
