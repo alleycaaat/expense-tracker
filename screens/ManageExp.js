@@ -1,4 +1,4 @@
-import { useContext, useLayoutEffect } from 'react';
+import { useContext, useLayoutEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { GlobalStyles } from '../constants/styles';
@@ -6,9 +6,11 @@ import { ExpContext } from '../store/exp-context';
 
 import IconBtn from '../components/UI/IconBtn';
 import ExpForm from '../components/ManageExp/ExpForm';
-import { storeExp } from '../util/http';
+import { deleteExp, storeExp, updateExp } from '../util/http';
+import Loading from '../components/UI/Loading';
 
 function ManageExp({ route, navigation }) {
+    const [isLoading, setIsLoading] = useState(false);
     const expCtx = useContext(ExpContext);
 
     //params is a ternary to avoid throwing an error if there's no id
@@ -23,8 +25,11 @@ function ManageExp({ route, navigation }) {
         });
     }, [navigation, isEditing]);
 
-    function deleteHandler() {
+    async function deleteHandler() {
+        setIsLoading(true);
+        await deleteExp(editedId);
         expCtx.deleteExp(editedId);
+
         navigation.goBack();
     }
 
@@ -33,13 +38,19 @@ function ManageExp({ route, navigation }) {
     }
 
     async function confirmHandler(expData) {
+        setIsLoading(true);
         if (isEditing) {
             expCtx.updateExp(editedId, expData);
+            await updateExp(editedId, expData);
         } else {
             const id = await storeExp(expData);
             expCtx.addExp({ ...expData, id: id });
         }
         navigation.goBack();
+    }
+
+    if (isLoading) {
+        return <Loading />;
     }
 
     return (

@@ -11,7 +11,7 @@ export const ExpContext = createContext({
 function expReducer(state, action) {
     switch (action.type) {
         case 'ADD':
-            return [action.payload, ...state]
+            return [action.payload, ...state];
         case 'SET':
             const reorder = action.payload.reverse();
             return reorder;

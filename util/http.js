@@ -3,13 +3,13 @@ import axios from 'axios';
 const ADDY = .env
 
 export async function storeExp(expData) {
-    const res = await axios.post(ADDY + 'expenses.json', expData)
-    const id = res.data.name
+    const res = await axios.post(ADDY + 'expenses.json', expData);
+    const id = res.data.name;
     return id;
 }
 
 export async function getExp() {
-    const res = await axios.get(ADDY + '/expenses.json');
+    const res = await axios.get(ADDY + 'expenses.json');
 
     const exps = [];
 
@@ -24,4 +24,12 @@ export async function getExp() {
         exps.push(expObj);
     }
     return exps;
+}
+
+export function updateExp(id, expData) {
+    return axios.put(ADDY + `expenses/${ id }.json`, expData);
+}
+
+export function deleteExp(id) {
+    return axios.delete(ADDY + `expenses/${ id }.json`);
 }
