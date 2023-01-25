@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const ADDY = .env;
+const ADDY = .env
 
-export function storeExp(expData) {
-    axios.post(ADDY + 'expenses.json',
-        expData
-    );
+export async function storeExp(expData) {
+    const res = await axios.post(ADDY + 'expenses.json', expData)
+    const id = res.data.name
+    return id;
 }
 
 export async function getExp() {

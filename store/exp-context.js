@@ -1,22 +1,20 @@
 import { createContext, useReducer } from 'react';
 
-
-
 export const ExpContext = createContext({
     exp: [],
     addExp: ({ desc, amt, date }) => { },
-    setExp: (exp) => {},
+    setExp: (exp) => { },
     deleteExp: (id) => { },
     updateExp: (id, { desc, amt, date }) => { },
 });
-//updated expense information is fine in ManageExp but isn't making it here
+
 function expReducer(state, action) {
     switch (action.type) {
         case 'ADD':
-            const id = new Date().toString() + Math.random().toString();
-            return [{ ...action.payload, id: id }, ...state];
+            return [action.payload, ...state]
         case 'SET':
-            return action.payload;
+            const reorder = action.payload.reverse();
+            return reorder;
         case 'UPDATE':
             //get the index of the item to be updated
             const updateExpId = state.findIndex(
@@ -42,7 +40,7 @@ function ExpContextProvider({ children }) {
     }
 
     function setExp(exp) {
-        dispatch({type: 'SET', payload: exp})
+        dispatch({ type: 'SET', payload: exp });
     }
 
     function deleteExp(id) {

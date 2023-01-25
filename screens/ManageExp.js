@@ -32,12 +32,12 @@ function ManageExp({ route, navigation }) {
         navigation.goBack();
     }
 
-    function confirmHandler(expData) {
+    async function confirmHandler(expData) {
         if (isEditing) {
             expCtx.updateExp(editedId, expData);
         } else {
-            storeExp(expData);
-            expCtx.addExp(expData);
+            const id = await storeExp(expData);
+            expCtx.addExp({ ...expData, id: id });
         }
         navigation.goBack();
     }
